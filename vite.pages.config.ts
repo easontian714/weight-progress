@@ -2,7 +2,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: "pages",
+  root: "github-pages",
   base: "/weight-progress/",
   publicDir: "../public",
   plugins: [react()],

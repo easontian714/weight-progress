@@ -28,7 +28,14 @@ test("ships the shared-data and responsive product source", async () => {
   assert.match(component, /weight_entries/);
   assert.match(component, /weight_milestones/);
   assert.match(component, /计划与实际进度/);
+  assert.match(component, /function RecentTrendChart/);
+  assert.match(component, /function LongTermPlanChart/);
+  assert.match(component, /visibleMilestones/);
+  assert.match(component, /查看全部目标/);
+  assert.match(component, /收起目标/);
   assert.match(css, /@media\(max-width:760px\)/);
+  assert.match(css, /\.chart-stack/);
+  assert.match(css, /\.milestone-toggle/);
   assert.match(client, /sb_publishable_/);
   assert.doesNotMatch(client, /service_role/);
 });
