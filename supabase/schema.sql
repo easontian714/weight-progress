@@ -78,7 +78,10 @@ create policy "deny public audit access" on public.weight_audit_log for select t
 insert into public.weight_plan(id,start_date,start_weight,target_date,target_weight) values (true,'2026-09-01',90.1,'2026-12-31',80.0)
 on conflict (id) do update set start_date=excluded.start_date,start_weight=excluded.start_weight,target_date=excluded.target_date,target_weight=excluded.target_weight;
 
-insert into public.weight_entries(entry_date,weight) values ('2026-09-01',90.1),('2026-09-15',89.5),('2026-09-17',88.3),('2026-09-18',89.0),('2026-09-28',90.2)
+insert into public.weight_entries(entry_date,weight) values
+('2026-09-01',90.1),('2026-09-09',90.1),('2026-09-10',90.1),('2026-09-11',90.1),
+('2026-09-12',88.5),('2026-09-13',89.0),('2026-09-15',89.5),('2026-09-16',89.6),
+('2026-09-17',88.3),('2026-09-18',89.0),('2026-09-19',89.6),('2026-09-28',90.2)
 on conflict (entry_date) do update set weight=excluded.weight;
 
 insert into public.weight_milestones(milestone_date,target_weight,status,actual_weight,reference_date,settled_at) values

@@ -4,7 +4,7 @@ import { supabase } from "../lib/supabase";
 
 type Entry={date:string;weight:number}; type Node={date:string;target:number;actual?:number;future?:boolean}; type Plan={startDate:string;startWeight:number;targetDate:string;targetWeight:number};
 const defaultPlan:Plan={startDate:"2026-09-01",startWeight:90.1,targetDate:"2026-12-31",targetWeight:80};
-const seed:Entry[]=[{date:"2026-09-01",weight:90.1},{date:"2026-09-15",weight:89.5},{date:"2026-09-17",weight:88.3},{date:"2026-09-18",weight:89},{date:"2026-09-28",weight:90.2}];
+const seed:Entry[]=[{date:"2026-09-01",weight:90.1},{date:"2026-09-09",weight:90.1},{date:"2026-09-10",weight:90.1},{date:"2026-09-11",weight:90.1},{date:"2026-09-12",weight:88.5},{date:"2026-09-13",weight:89},{date:"2026-09-15",weight:89.5},{date:"2026-09-16",weight:89.6},{date:"2026-09-17",weight:88.3},{date:"2026-09-18",weight:89},{date:"2026-09-19",weight:89.6},{date:"2026-09-28",weight:90.2}];
 const nodes:Node[]=[{date:"2026-09-21",target:88.4,actual:89},{date:"2026-09-28",target:87.8,actual:90.2},{date:"2026-10-05",target:87.3,future:true},{date:"2026-10-12",target:86.7,future:true}];
 const days=(a:string,b:string)=>(Date.parse(b+"T00:00:00Z")-Date.parse(a+"T00:00:00Z"))/86400000;
 const label=(d:string)=>new Intl.DateTimeFormat("zh-CN",{month:"short",day:"numeric",timeZone:"UTC"}).format(new Date(d+"T00:00:00Z"));
