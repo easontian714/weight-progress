@@ -43,12 +43,15 @@ test("ships the shared-data and responsive product source", async () => {
   assert.match(component, /record-head/);
   assert.match(component, /achievement-badge/);
   assert.match(component, /当日达标/);
+  assert.match(component, /milestone-edit-toggle/);
+  assert.match(component, /未到时间/);
   assert.doesNotMatch(component, /useState\("90\.2"\)/);
   assert.match(css, /@media\(max-width:760px\)/);
   assert.match(css, /\.long-plan/);
   assert.match(css, /\.milestone-toggle/);
   assert.match(css, /white-space:nowrap/);
   assert.match(css, /\.record-change/);
+  assert.match(css, /\.lag\.positive/);
   assert.match(client, /sb_publishable_/);
   assert.doesNotMatch(client, /service_role/);
 });
