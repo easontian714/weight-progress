@@ -2,6 +2,7 @@ export type Entry={date:string;weight:number};
 export type Plan={startDate:string;startWeight:number;targetDate:string;targetWeight:number};
 export type MilestoneInput={date:string;target:number};
 export type MilestoneState="future"|"completed"|"missed"|"unrecorded";
+export type TrendRange="7d"|"30d"|"all";
 
 const dayMs=86_400_000;
 const utc=(date:string)=>Date.parse(date+"T00:00:00Z");
@@ -36,4 +37,12 @@ export function deriveMilestone(node:MilestoneInput,entries:Entry[],today:string
 export function achievementAt(actual:number,date:string,plan:Plan){
   if(date<plan.startDate)return "outside-plan" as const;
   return actual<=plannedWeightAt(plan,date)?"achieved" as const:"missed" as const;
+}
+
+export function filterEntriesByRange(entries:Entry[],range:TrendRange){
+  const sorted=[...entries].sort((a,b)=>a.date.localeCompare(b.date));
+  if(range==="all"||sorted.length===0)return sorted;
+  const end=sorted.at(-1)!.date,inclusiveDays=range==="7d"?7:30;
+  const startDate=new Date(utc(end)-(inclusiveDays-1)*dayMs).toISOString().slice(0,10);
+  return sorted.filter(entry=>entry.date>=startDate);
 }
