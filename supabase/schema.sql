@@ -97,3 +97,7 @@ insert into public.weight_milestones(milestone_date,target_weight,status,actual_
 ('2026-12-14',81.4,'future',null,null,null),('2026-12-21',80.8,'future',null,null,null),
 ('2026-12-28',80.3,'future',null,null,null),('2026-12-31',80.0,'future',null,null,null)
 on conflict (milestone_date) do update set target_weight=excluded.target_weight,status=excluded.status,actual_weight=excluded.actual_weight,reference_date=excluded.reference_date,settled_at=excluded.settled_at;
+
+alter table if exists public.weight_profiles add column if not exists height_cm numeric(5,1);
+alter table if exists public.weight_profiles drop constraint if exists weight_profiles_height_cm_check;
+alter table if exists public.weight_profiles add constraint weight_profiles_height_cm_check check (height_cm is null or height_cm between 100 and 250);
