@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {achievementAt,deriveMilestone,filterEntriesByRange,planDifferenceLabel,plannedWeightAt} from "../lib/weight-calculations.ts";
+import {achievementAt,bmiMarkerPercent,calculateBmi,classifyChineseBmi,clampPage,deriveMilestone,filterEntriesByRange,milestonePageForContext,normalWeightRange,planDifferenceLabel,plannedWeightAt} from "../lib/weight-calculations.ts";
 
 const plan={startDate:"2026-09-01",startWeight:90.1,targetDate:"2026-12-31",targetWeight:80};
 const entries=[{date:"2026-10-04",weight:88.7},{date:"2026-10-05",weight:88.9},{date:"2026-10-06",weight:86.7}];
@@ -30,4 +30,22 @@ test("trend ranges end at the latest recorded date",()=>{
   assert.deepEqual(filterEntriesByRange(rangeEntries,"30d").map(entry=>entry.date),["2026-09-07","2026-09-30","2026-10-06"]);
   assert.deepEqual(filterEntriesByRange(rangeEntries,"all").map(entry=>entry.date),["2026-09-01","2026-09-07","2026-09-30","2026-10-06"]);
   assert.deepEqual(filterEntriesByRange([],"7d"),[]);
+});
+
+test("calculates and classifies Chinese adult BMI",()=>{
+  assert.equal(calculateBmi(86.7,178),27.4);
+  assert.equal(classifyChineseBmi(18.4),"underweight");
+  assert.equal(classifyChineseBmi(18.5),"normal");
+  assert.equal(classifyChineseBmi(24),"overweight");
+  assert.equal(classifyChineseBmi(28),"obesity");
+  assert.deepEqual(normalWeightRange(178),{min:58.6,max:75.7});
+  assert.equal(bmiMarkerPercent(10),0);
+  assert.equal(bmiMarkerPercent(40),100);
+});
+
+test("selects and clamps milestone pages",()=>{
+  const states=["completed","missed","missed","future","future","future","future","future"].map(state=>({state}));
+  assert.equal(milestonePageForContext(states,5),0);
+  assert.equal(clampPage(3,8,5),1);
+  assert.equal(clampPage(1,0,5),0);
 });

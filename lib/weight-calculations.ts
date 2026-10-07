@@ -46,3 +46,33 @@ export function filterEntriesByRange(entries:Entry[],range:TrendRange){
   const startDate=new Date(utc(end)-(inclusiveDays-1)*dayMs).toISOString().slice(0,10);
   return sorted.filter(entry=>entry.date>=startDate);
 }
+
+export function calculateBmi(weightKg:number,heightCm:number){
+  return Math.round(weightKg/((heightCm/100)**2)*10)/10;
+}
+
+export function classifyChineseBmi(bmi:number){
+  if(bmi<18.5)return "underweight" as const;
+  if(bmi<24)return "normal" as const;
+  if(bmi<28)return "overweight" as const;
+  return "obesity" as const;
+}
+
+export function normalWeightRange(heightCm:number){
+  const metres=heightCm/100;
+  return {min:Math.round(18.5*metres*metres*10)/10,max:Math.round(23.9*metres*metres*10)/10};
+}
+
+export function bmiMarkerPercent(bmi:number){
+  return Math.max(0,Math.min(100,(bmi-15)/(35-15)*100));
+}
+
+export function clampPage(page:number,itemCount:number,pageSize=5){
+  return Math.max(0,Math.min(page,Math.max(0,Math.ceil(itemCount/pageSize)-1)));
+}
+
+export function milestonePageForContext(items:Array<{state:string}>,pageSize=5){
+  const firstFuture=items.findIndex(item=>item.state==="future");
+  const anchor=firstFuture<0?Math.max(0,items.length-1):Math.max(0,firstFuture-2);
+  return clampPage(Math.floor(anchor/pageSize),items.length,pageSize);
+}
