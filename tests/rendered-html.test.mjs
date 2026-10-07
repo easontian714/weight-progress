@@ -31,8 +31,12 @@ test("ships the shared-data and responsive product source", async () => {
   assert.match(component, /function RecentTrendChart/);
   assert.match(component, /function LongTermPlanChart/);
   assert.match(component, /visibleMilestones/);
-  assert.match(component, /查看全部目标/);
-  assert.match(component, /收起目标/);
+  assert.match(component, /MILESTONE_PAGE_SIZE=5/);
+  assert.match(component, /milestone-pager/);
+  assert.match(component, /上一页/);
+  assert.match(component, /下一页/);
+  assert.doesNotMatch(component, /showAllMilestones/);
+  assert.doesNotMatch(component, /查看全部目标/);
   assert.match(component, /monthlyTicks/);
   assert.match(component, /className="panel long-plan"/);
   assert.match(component, /planDifferenceLabel/);
@@ -56,6 +60,12 @@ test("ships the shared-data and responsive product source", async () => {
   assert.match(component, /收起记录/);
   assert.match(component, /function WeightTrackerSkeleton/);
   assert.match(component, /本地预览/);
+  assert.match(component, /trend-toolbar/);
+  assert.match(component, /中国成人标准/);
+  assert.match(component, /正常体重/);
+  assert.match(component, /设置身高/);
+  assert.match(component, /updateProfileHeight/);
+  assert.match(component, /bmi-scale/);
   assert.doesNotMatch(component, /useState\("90\.2"\)/);
   assert.match(css, /@media\(max-width:760px\)/);
   assert.match(css, /\.long-plan/);
@@ -68,6 +78,8 @@ test("ships the shared-data and responsive product source", async () => {
   assert.match(css, /--danger:/);
   assert.match(css, /\.skeleton/);
   assert.match(css, /\.chart-stage/);
+  assert.match(css, /\.bmi-card/);
+  assert.match(css, /\.bmi-marker/);
   assert.match(client, /sb_publishable_/);
   assert.doesNotMatch(client, /service_role/);
 });
